@@ -1,0 +1,56 @@
+{
+    "name": "Batch Demo",
+    "description": "Run a batch command on JARVICE",
+    "author": "Nimbix, Inc.",
+    "licensed": true,
+    "classifications": [
+        "Software Development"
+    ],
+    "machines": [
+        "n0"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Batch": {
+            "path": "/bin/bash",
+            "interactive": false,
+            "name": "Batch",
+            "description": "Hello World",
+            "parameters": {
+                "-l": {
+                    "name": "-l",
+                    "description": "-l",
+                    "type": "CONST",
+                    "value": "-l",
+                    "positional": true,
+                    "required": true
+                },
+                "-c": {
+                    "name": "-c",
+                    "description": "-c",
+                    "type": "CONST",
+                    "value": "-c",
+                    "positional": true,
+                    "required": true
+                },
+                "command": {
+                    "name": "Command",
+                    "description": "Command to run",
+                    "type": "STR",
+                    "value": "echo Hello World",
+                    "positional": true,
+                    "required": true
+                }            
+            }
+        }
+    },
+    "image": {
+        "type": "image/png",
+        "data": ""
+    }
+}

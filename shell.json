@@ -1,0 +1,31 @@
+{
+    "name": "Shell",
+    "description": "Shell on JARVICE",
+    "author": "Nimbix, Inc.",
+    "licensed": true,
+    "classifications": [
+        "Software Development"
+    ],
+    "machines": [
+        "n0"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Shell": {
+            "path": "/sbin/init",
+            "interactive": true,
+            "name": "Shell",
+            "description": "Start a gotty shell.",
+            "parameters": {}
+        }
+    },
+    "image": {
+        "data": "",
+        "type": "image/png"
+    }
+}

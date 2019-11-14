@@ -1,0 +1,73 @@
+{
+    "name": "Jupyter Notebook Demo",
+    "description": "Demo for jupyter notebook on JARVICE",
+    "author": "Nimbix, Inc.",
+    "licensed": true,
+    "classifications": [
+        "Software Development"
+    ],
+    "machines": [
+        "n0"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Notebook": {
+            "path": "/opt/conda/bin/jupyter",
+            "interactive": true,
+            "name": "Launch notebook",
+            "description": "Start Jupyter notebook",
+            "url": "http://%PUBLICADDR%:8888/?token=%RANDOM64%",
+            "parameters": {
+                "notebook": {
+                    "name": "notebook",
+                    "description": "notebook",
+                    "type": "CONST",
+                    "value": "notebook",
+                    "positional": true,
+                    "required": true
+                },
+                "port": {
+                    "name": "port",
+                    "description": "port",
+                    "type": "CONST",
+                    "value": "--port=8888",
+                    "positional": true,
+                    "required": true
+                },
+                "ip": {
+                    "name": "ip",
+                    "description": "ip",
+                    "type": "CONST",
+                    "value": "--ip=0.0.0.0",
+                    "positional": true,
+                    "required": true
+                },
+                "browser": {
+                    "name": "browser",
+                    "description": "browser",
+                    "type": "CONST",
+                    "value": "--no-browser",
+                    "positional": true,
+                    "required": true
+                },
+                "token": {
+                    "name": "token",
+                    "description": "token",
+                    "type": "CONST",
+                    "value": "--NotebookApp.token=%RANDOM64%",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        }
+    },
+    "image": {
+        "type": "image/png",
+        "data": ""
+    }
+}

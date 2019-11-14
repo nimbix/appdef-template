@@ -1,0 +1,77 @@
+{
+    "name": "default",
+    "description": "",
+    "author": "",
+    "licensed": true,
+    "classifications": [
+        "Uncategorized"
+    ],
+    "machines": [
+        "*"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Batch": {
+            "path": "/bin/bash",
+            "interactive": false,
+            "name": "Batch",
+            "description": "Run a batch command using /bin/bash.  The output may be monitored directly in your web browser.",
+            "parameters": {
+                "-l": {
+                    "name": "-l",
+                    "description": "-l",
+                    "type": "CONST",
+                    "value": "-l",
+                    "positional": true,
+                    "required": true
+                },
+                "-c": {
+                    "name": "-c",
+                    "description": "-c",
+                    "type": "CONST",
+                    "value": "-c",
+                    "positional": true,
+                    "required": true
+                },
+                "command": {
+                    "name": "Command",
+                    "description": "Command to run",
+                    "type": "STR",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        },
+        "Server": {
+            "path": "/sbin/init",
+            "interactive": true,
+            "name": "Server",
+            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
+            "parameters": {}
+        },
+        "GUI": {
+            "path": "/usr/local/bin/nimbix_desktop",
+            "interactive": true,
+            "name": "GUI",
+            "description": "Run a GUI command, and connect interactively directly from your web browser (requires Nimbix Desktop in image).",
+            "parameters": {
+                "command": {
+                    "name": "Command",
+                    "description": "Command to run",
+                    "type": "STR",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        }
+    },
+    "image": {
+        "data": "",
+        "type": "image/png"
+    }
+}

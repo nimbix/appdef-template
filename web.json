@@ -1,0 +1,32 @@
+{
+    "name": "Web",
+    "description": "Web service on JARVICE",
+    "author": "Nimbix, Inc.",
+    "licensed": true,
+    "classifications": [
+        "Software Development"
+    ],
+    "machines": [
+        "n0"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Server": {
+            "path": "/sbin/init",
+            "interactive": true,
+            "name": "Server",
+            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
+            "url": "http://%PUBLICADDR%:8000/",
+            "parameters": {}
+        }
+    },
+    "image": {
+        "data": "",
+        "type": "image/png"
+    }
+}
