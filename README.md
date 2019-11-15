@@ -368,7 +368,7 @@ This will open `Hello World` webpage being served by nginx on JARVICE.
 
 ## Jupyter Notebook AppDef Template
 
-The `jupyter.json` AppDef creates an interactive Jupyter Notebook. The `Notebook` command uses the `%RNADOM64%` substitution to start a Jupyter Notebook with a random access token.
+The `jupyter.json` AppDef creates an interactive Jupyter Notebook. The `Notebook` command uses the `%RANDOM64%` substitution to start a Jupyter Notebook with a random access token.
 
 ```bash
         "Notebook": {
