@@ -17,13 +17,37 @@
     ],
     "commands": {
         "Server": {
-            "path": "/sbin/init",
+            "path": "/usr/sbin/nginx",
             "interactive": true,
+            "publicip": true,
             "name": "Server",
             "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
             "url": "http://%PUBLICADDR%:8000/",
-            "parameters": {}
+            "parameters": {
+                "-g": {
+                    "name": "-g",
+                    "description": "-g",
+                    "type": "CONST",
+                    "value": "-g",
+                    "positional": true,
+                    "required": true
+                },
+                "daemon": {
+                    "name": "daemon",
+                    "description": "daemon",
+                    "type": "CONST",
+                    "value": "daemon off;",
+                    "positional": true,
+                    "required": true
+                }
+            }
         }
+    },
+    "identity": {
+        "username": "www-data",
+        "group": "www-data",
+        "uid": 33,
+        "gid": 33
     },
     "image": {
         "data": "",

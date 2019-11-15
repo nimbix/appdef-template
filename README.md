@@ -268,8 +268,172 @@ Note:
 * `batch.json` set the `machines` key to `n0` which will limits the available machine types for this application. Replace with `*` to support all machine types or add additional machine types to the list. [Available machine types on the NIMBIX cloud](https://status.jarvice.com/)
 * `command` parameter is `STR` type with a default value of `echo Hello World`. This `Parameter` can be set by a user in step 3 above
 
-
-
 ## Web service AppDef Template
 
+The `web.json` AppDef creates an interactive job that serves a web service. This examples utilizes the `url` key to set the URL provided to a user that clicks on a running application.
+
+```json
+        "Server": {
+            "path": "/sbin/init",
+            "interactive": true,
+            "name": "Server",
+            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
+            "url": "http://%PUBLICADDR%:8000/",
+            "parameters": {}
+        }
+```
+
+The `Server` endpoint will redirect users to port 8000 of a running job from the JARVICE portal.
+
+The `url` key supports substitution for the following values:
+
+#### %PUBLICADDR%
+
+Public address to connect to running job
+
+#### %NIMBIXPASSWD% 
+
+Random generated user password for the job. Can be used to login via ssh 
+
+#### %NIMBIXUSER%
+
+The linux user for the current job (defaults to `nimbix`)
+
+#### %JOBNAME%
+
+The JARVICE job name.
+
+#### %RANDOM16%
+
+Random generated token of length 16
+
+#### %RANDOM32%
+
+Random generated token of length 32
+
+#### %RANDOM64%
+
+Random generated token of length 64
+
+#### %RANDOM128%
+
+Random generated token of length 128
+
+### Sample Application
+
+This examples uses a container based off of `nginx` from DockerHub serving port 8000. The source code for the container is in the `nginx` folder. A pre-built image will be used from the `nimbix` DockerHub account.
+
+Create a JARVICE application with nginx:
+
+1. Select PushToCompute tab on the menu on the right
+2. Click the `New` icon in the middle of the page
+3. Fill in `App ID` (e.g. `web`)
+4. Fill in 'Docker or Singularity Repository' with `nimbix/nginx:tutorial`
+
+    ![nginx](screenshots/nginxExample.png)
+
+5. Upload `web.json` using the `APPDEF` tab
+6. Click the `OK` button in the lower right corner
+7. Click on the application menu and select Pull
+
+![Application Card](screenshots/appCard.png)
+![Pull](screenshots/pull.png)
+
+Submit a new job after the Pull completes:
+
+1. Click on the application icon
+2. Click the `Server` button
+3. Click the `SUBMIT` button
+4. `Click to connect` to open web service
+    ![nginx Submit](screenshots/nginxConnect.png)
+
+![nginx page](screenshots/nginxRun.png)
+
 ## Jupyter Notebook AppDef Template
+
+The `jupyter.json` AppDef creates an interactive Jupyter Notebook. The `Notebook` command uses the `%RNADOM64%` substitution to start a Jupyter Notebook with a random access token.
+
+```bash
+        "Notebook": {
+            "path": "/opt/conda/bin/jupyter",
+            "interactive": true,
+            "name": "Launch notebook",
+            "description": "Start Jupyter notebook",
+            "url": "http://%PUBLICADDR%:8888/?token=%RANDOM64%",
+            "parameters": {
+                "notebook": {
+                    "name": "notebook",
+                    "description": "notebook",
+                    "type": "CONST",
+                    "value": "notebook",
+                    "positional": true,
+                    "required": true
+                },
+                "port": {
+                    "name": "port",
+                    "description": "port",
+                    "type": "CONST",
+                    "value": "--port=8888",
+                    "positional": true,
+                    "required": true
+                },
+                "ip": {
+                    "name": "ip",
+                    "description": "ip",
+                    "type": "CONST",
+                    "value": "--ip=0.0.0.0",
+                    "positional": true,
+                    "required": true
+                },
+                "browser": {
+                    "name": "browser",
+                    "description": "browser",
+                    "type": "CONST",
+                    "value": "--no-browser",
+                    "positional": true,
+                    "required": true
+                },
+                "token": {
+                    "name": "token",
+                    "description": "token",
+                    "type": "CONST",
+                    "value": "--NotebookApp.token=%RANDOM64%",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        }
+```
+
+Notice `%RANDOM64%` is used in the `parameter` and `url` key. This substitution will provide the same random generated token to the connection URL and the command used to start Jupyter Notebook.
+
+### Sample Application
+
+Create a JARVICE application using the official Jupyter Notebook image from DockerHub:
+
+1. Select PushToCompute tab on the menu on the right
+2. Click the `New` icon in the middle of the page
+3. Fill in `App ID` (e.g. `jupyter`)
+4. Fill in 'Docker or Singularity Repository' with `jupyter/tensorflow-notebook:latest``
+
+    ![Jupyter](screenshots/jupyter.png)
+
+5. Upload `jupyter.json` using the `APPDEF` tab
+6. Click the `OK` button in the lower right corner
+7. Click on the application menu and select Pull
+
+![Application Card](screenshots/appCard.png)
+![Pull](screenshots/pull.png)
+
+Submit a new job after the Pull completes:
+
+1. Click on the application icon
+2. Click the `Launch Notebook` button
+3. Click the `SUBMIT` button
+    ![Jupyter Submit](screenshots/jupyterSubmit.png)
+4. `Click here to connect` to access Jupyter job
+    ![Jupyter Connect](screenshots/jupyterConnect.png)
+
+Example Jupyter session:
+
+![Jupyter Session](screenshots/jupyterRun.png)
