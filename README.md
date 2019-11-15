@@ -345,9 +345,9 @@ Submit a new job after the Pull completes:
 2. Click the `Server` button
 3. Click the `SUBMIT` button
 4. `Click to connect` to open web service
-    ![nginx Submit](screenshots/nginxConnect.png)
+    ![nginx Connect](screenshots/nginxConnect.png)
 
-![nginx page](screenshots/nginxRun.png)
+This will open `Hello World` webpage being served by nginx on JARVICE.
 
 ## Jupyter Notebook AppDef Template
 
