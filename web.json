@@ -19,10 +19,9 @@
         "Server": {
             "path": "/usr/sbin/nginx",
             "interactive": true,
-            "publicip": true,
             "name": "Server",
-            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
-            "url": "http://%PUBLICADDR%:8000/",
+            "description": "Start nginx web service",
+            "url": "http://%PUBLICADDR%:8080/",
             "parameters": {
                 "-g": {
                     "name": "-g",
