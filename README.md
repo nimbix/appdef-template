@@ -274,16 +274,33 @@ The `web.json` AppDef creates an interactive job that serves a web service. This
 
 ```json
         "Server": {
-            "path": "/sbin/init",
+            "path": "/usr/sbin/nginx",
             "interactive": true,
             "name": "Server",
-            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
-            "url": "http://%PUBLICADDR%:8000/",
-            "parameters": {}
+            "description": "Start nginx web service",
+            "url": "http://%PUBLICADDR%:8080/",
+            "parameters": {
+                "-g": {
+                    "name": "-g",
+                    "description": "-g",
+                    "type": "CONST",
+                    "value": "-g",
+                    "positional": true,
+                    "required": true
+                },
+                "daemon": {
+                    "name": "daemon",
+                    "description": "daemon",
+                    "type": "CONST",
+                    "value": "daemon off;",
+                    "positional": true,
+                    "required": true
+                }
+            }
         }
 ```
 
-The `Server` endpoint will redirect users to port 8000 of a running job from the JARVICE portal.
+The `Server` endpoint will redirect users to port 8080 of a running job from the JARVICE portal. This snippet will start `nginx` in the foreground. The resulting job will execute ```/usr/bin/nginx -g 'daemon off;'```
 
 The `url` key supports substitution for the following values:
 
@@ -321,7 +338,7 @@ Random generated token of length 128
 
 ### Sample Application
 
-This examples uses a container based off of `nginx` from DockerHub serving port 8000. The source code for the container is in the `nginx` folder. A pre-built image will be used from the `nimbix` DockerHub account.
+This examples uses a container based off of `nginx` from DockerHub serving port 8080. The source code for the container is in the `nginx` folder. A pre-built image will be used from the `nimbix` DockerHub account.
 
 Create a JARVICE application with nginx:
 
