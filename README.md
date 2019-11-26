@@ -46,7 +46,7 @@ The application on JARVICE will be updated after a PushToCompute Pull or Build+P
 
 ## Default AppDef Template
 
-All new applications will use the default AppDef template. This section will examine the default template
+All new applications will use the default AppDef template.
 
 Each AppDef contains the following sections:
 
@@ -64,7 +64,7 @@ Author listed on the application icon
 
 #### licensed
 
-Is a license included with the application? `false` indicated an additional license is required
+Is a license included with the application? `false` indicates an additional license is required
 
 #### classification
 
@@ -98,7 +98,9 @@ A command describes a workflow provided by an application. The default template 
 
 ### Sample Application
 
-The different work flows are illustrated by `nimbix/ubuntu-desktop:xenial` example available on DockerHub. Create a new PushToCompute application:
+The different work flows are illustrated by `nimbix/ubuntu-desktop:xenial` example available on DockerHub. 
+
+Create a new PushToCompute application by:
 
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
@@ -116,7 +118,7 @@ The application icon will update when the Pull completes
 
 The AppDef for `nimbix/ubuntu-desktop:xenial` sets the `name`, `author`, and `image` keys shown above. The additional components on the icon are the `App ID` (bottom right corner) and permissions setting (lock in top right corner). All new applications on JARVICE are set to private and will appear with the lock icon. Application can be made public following [these](https://jarvice.readthedocs.io/en/latest/public/) guidelines.
 
-Clicking on the application icon will show the available workflows (Batch, Server, GUI)
+Clicking on the application icon will show the available workflows (the default AppDef provides Batch, Server, GUI)
 
 ![Workflows](screenshots/ubuntuWorkflow.png)
 
@@ -151,7 +153,7 @@ The job will exit if the running window is closed (see below)
 
 ![GUI Run](screenshots/guiRun.png)
 
-The `GUI` option above require the Nimbix Desktop. This environment is installed by adding [image-common](https://github.com/nimbix/image-common#ubuntu-with-nimbix-desktop) to an applications Dockerfile.
+The `GUI` option above requires the Nimbix Desktop. This environment is installed by adding [image-common](https://github.com/nimbix/image-common#ubuntu-with-nimbix-desktop) to an applications Dockerfile.
 
 ## Shell AppDef Template
 
