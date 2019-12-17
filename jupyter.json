@@ -62,6 +62,14 @@
                     "value": "--NotebookApp.token=%RANDOM64%",
                     "positional": true,
                     "required": true
+                },
+                "base": {
+                    "name": "base_url",
+                    "description": "base url for notebook",
+                    "type": "CONST",
+                    "value": "--NotebookApp.base_url=%BASEURL%",
+                    "positional": true,
+                    "required": true
                 }
             }
         }

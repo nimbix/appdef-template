@@ -338,6 +338,10 @@ Random generated token of length 64
 
 Random generated token of length 128
 
+#### %BASEURL%
+
+Base path used by a JARVICE job
+
 ### Sample Application
 
 This examples uses a container based off of `nginx` from DockerHub serving port 8080. The source code for the container is in the `nginx` folder. A pre-built image will be used from the `nimbix` DockerHub account.
@@ -419,12 +423,22 @@ The `jupyter.json` AppDef creates an interactive Jupyter Notebook. The `Notebook
                     "value": "--NotebookApp.token=%RANDOM64%",
                     "positional": true,
                     "required": true
+                },
+                "base": {
+                    "name": "base_url",
+                    "description": "base url for notebook",
+                    "type": "CONST",
+                    "value": "--NotebookApp.base_url=%BASEURL%",
+                    "positional": true,
+                    "required": true
                 }
             }
         }
 ```
 
 Notice `%RANDOM64%` is used in the `parameter` and `url` key. This substitution will provide the same random generated token to the connection URL and the command used to start Jupyter Notebook.
+
+`%BASEURL` provides the Jupyter notebook with the base path used by the JARVICE job.
 
 ### Sample Application
 
