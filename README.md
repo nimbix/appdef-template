@@ -12,6 +12,7 @@ Refer to this [link](https://jarvice.readthedocs.io/en/latest/appdef/) for compl
 * [Batch AppDef Template](#batch-appdef-template)
 * [Web service AppDef Template](#web-service-appdef-template)
 * [Jupyter Notebook AppDef Template](#jupyter-notebook-appdef-template)
+* [GUI application AppDef Template](#gui-application-appdef-template)
 
 
 ## Using AppDef to Customize Applications in JARVICE
@@ -166,7 +167,7 @@ Create a JARVICE application using the official CentOS image from DockerHub:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `shell`)
-4. Fill in 'Docker or Singularity Repository' with `centos:7`
+4. Fill in 'Docker Repository' with `centos:7`
 
     ![Centos](screenshots/centosExample.png)
 
@@ -247,7 +248,7 @@ Create a JARVICE application using the official Ubuntu image from DockerHub:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `batch`)
-4. Fill in 'Docker or Singularity Repository' with `ubuntu:xenial`
+4. Fill in 'Docker Repository' with `ubuntu:xenial`
 
     ![Ubuntu](screenshots/ubuntuExample.png)
 
@@ -355,7 +356,7 @@ Create a JARVICE application with nginx:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `web`)
-4. Fill in 'Docker or Singularity Repository' with `nimbix/nginx:tutorial`
+4. Fill in 'Docker Repository' with `nimbix/nginx:tutorial`
 
     ![nginx](screenshots/nginxExample.png)
 
@@ -453,7 +454,7 @@ Create a JARVICE application using the official Jupyter Notebook image from Dock
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `jupyter`)
-4. Fill in 'Docker or Singularity Repository' with `jupyter/tensorflow-notebook:latest``
+4. Fill in 'Docker Repository' with `jupyter/tensorflow-notebook:latest``
 
     ![Jupyter](screenshots/jupyter.png)
 
@@ -476,3 +477,85 @@ Submit a new job after the Pull completes:
 Example Jupyter session:
 
 ![Jupyter Session](screenshots/jupyterRun.png)
+
+## GUI application AppDef Template
+
+The `gui.json` AppDef creates an interactive job that runs an X Windows application, [Gimp](https://www.gimp.org/), in a desktop based on the [default AppDef](#Default-AppDef-Template) GUI endpoint. 
+This example requires the Nimbix Desktop, provided by adding [image-common](https://github.com/nimbix/image-common#centos-with-nimbix-desktop) to an application's Dockerfile. 
+The Nimbix desktop is launched with the Gimp binary path as a positional argument. Closing the Gimp application will shutdown the JARVICE job.
+
+```json
+{
+  "name": "Gimp",
+  "description": "Gimp application on JARVICE",
+  "author": "Nimbix, Inc.",
+  "licensed": true,
+  "classifications": [
+    "Image Editing"
+  ],
+  "machines": [
+    "n[2-9]*",
+    "n[1-9][0-9]*"
+  ],
+  "vault-types": [
+    "FILE",
+    "BLOCK",
+    "BLOCK_ARRAY",
+    "OBJECT"
+  ],
+  "commands": {
+    "Gimp": {
+      "path": "/usr/local/bin/nimbix_desktop",
+      "interactive": true,
+      "publicip": true,
+      "name": "Gimp GUI",
+      "description": "Start an interactive desktop session with Gimp multi-window mode",
+      "parameters": {
+        "toolbox": {
+          "name": "toolbox",
+          "description": "path to Gimp Toolbox binary",
+          "value": "/usr/bin/gimp",
+          "type": "CONST",
+          "positional": true,
+          "required": true
+        }
+      }
+    }
+  },
+  "image": {
+    "type": "image/png",
+    "data": ""
+  }
+}
+```
+
+### Sample Application
+
+Create a JARVICE application using the official Jupyter Notebook image from gcr.io:
+
+1. Select PushToCompute tab on the menu on the right
+2. Click the `New` icon in the middle of the page
+3. Fill in `App ID` (e.g. `gimp`)
+4. Fill in 'Docker Repository' with `gcr.io/jarvice/app-gimp:2.8`
+
+    ![Gimp](screenshots/gimp.png)
+
+5. Upload `gui.json` using the `APPDEF` tab
+6. Click the `OK` button in the lower right corner
+7. Click on the application menu and select Pull
+
+![Gimp Application Card](screenshots/gimpappCard.png)
+![Pull](screenshots/pull.png)
+
+Submit a new job after the Pull completes:
+
+1. Click on the application icon
+2. Click the `Gimp GUI` button
+3. Click the `SUBMIT` button
+    ![Gimp Submit](screenshots/gimpSubmit.png)
+4. Click the screenshot below Password to connect to the desktop session in a browser
+    ![Gimp Connect](screenshots/gimpnoVNC.png)
+
+Example Gimp session:
+
+![Gimp Session](screenshots/gimpRun.png)
