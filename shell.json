@@ -20,7 +20,7 @@
             "path": "/sbin/init",
             "interactive": true,
             "name": "Shell",
-            "description": "Start a gotty shell.",
+            "description": "Start a gotty shell",
             "parameters": {}
         }
     },
