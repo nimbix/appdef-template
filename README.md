@@ -2,7 +2,7 @@
 
 The JARVICE Application Definition (AppDef) Reference describes the application interface for applications that are deployed on JARVICE with PushToCompute. This guide will walk through creating an AppDef for common application use cases on the JARVICE platform. 
 
-Refer to this [link](https://jarvice.readthedocs.io/en/latest/appdef/) for complete documentation.
+Refer to this [AppDef link](https://jarvice.readthedocs.io/en/latest/appdef/) for complete documentation. Also refer to the [JARVICE Helm chart and general JARVICE platform](https://github.com/nimbix/jarvice-helm) documentation for further info regarding the whole platform.
 
 ## Contents
 
@@ -13,11 +13,13 @@ Refer to this [link](https://jarvice.readthedocs.io/en/latest/appdef/) for compl
 * [Web service AppDef Template](#web-service-appdef-template)
 * [Jupyter Notebook AppDef Template](#jupyter-notebook-appdef-template)
 * [GUI application AppDef Template](#gui-application-appdef-template)
+* [Additional Resources](#additional-resources)
 
 
 ## Using AppDef to Customize Applications in JARVICE
 
 All applications in JARVICE are created with the PushToCompute flow. PushToCompute is a full continuous integration/continuous deployment (CI/CD) pipeline for applications on the JARVICE platform. See [here](https://jarvice.readthedocs.io/en/latest/cicd/) for a complete overview.
+Also refer to [JARVICE platform documentation](https://github.com/nimbix/jarvice-helm/blob/master/Configuration.md#running-custom-applications) when writing custom applications.
 
 Adding an AppDef to an application enables the owner to customize a variety of components including: the application card, available workflows, workflow arguments, and connection options.
 
@@ -77,9 +79,11 @@ E.g. Software Development, Artificial Intelligence, Machine Learning, etc
 
 #### machines
 
-List the eligible machines an application can use.
+List the eligible machines an application can use
 
 [Machines](https://status.jarvice.com/) available on the NIMBIX cloud
+
+[Machine documentation](https://jarvice.readthedocs.io/en/latest/machines/) for specifying machines
 
 #### vault-type
 
@@ -559,3 +563,12 @@ Submit a new job after the Pull completes:
 Example Gimp session:
 
 ![Gimp Session](screenshots/gimpRun.png)
+
+## Additional Resources
+
+* [JARVICE developer documentation](https://jarvice.readthedocs.io/en/latest/appdef/) 
+* [JARVICE platform documentation](https://github.com/nimbix/jarvice-helm)
+* [Nimbix Support Help Center articles](https://support.nimbix.net/hc/en-us/articles/115004341026-Hello-World-Introduction-to-PushToCompute)
+* [Introduction to PushToCompute article](https://support.nimbix.net/hc/en-us/articles/115004341026-Hello-World-Introduction-to-PushToCompute)
+* [Nimbix Developer Forum on Google Groups](https://groups.google.com/g/nimbix-developer-forum)
+* [Nimbix repos on GitHub](https://github.com/nimbix)
