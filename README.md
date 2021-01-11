@@ -1,8 +1,8 @@
 # JARVICE Application Definition Guide
 
-The JARVICE Application Definition (Appdef) Reference describes the application interface for applications that are deployed on JARVICE with PushToCompute. This guide will walk through creating an AppDef for common application use cases on the JARVICE platform. 
+The JARVICE Application Definition (AppDef) Reference describes the application interface for applications that are deployed on JARVICE with PushToCompute. This guide will walk through creating an AppDef for common application use cases on the JARVICE platform. 
 
-Refer to this [link](https://jarvice.readthedocs.io/en/latest/appdef/) for complete documentation.
+Refer to this [AppDef link](https://jarvice.readthedocs.io/en/latest/appdef/) for complete documentation. Also refer to the [JARVICE Helm chart and general JARVICE platform](https://github.com/nimbix/jarvice-helm) documentation for further info regarding the whole platform.
 
 ## Contents
 
@@ -12,13 +12,16 @@ Refer to this [link](https://jarvice.readthedocs.io/en/latest/appdef/) for compl
 * [Batch AppDef Template](#batch-appdef-template)
 * [Web service AppDef Template](#web-service-appdef-template)
 * [Jupyter Notebook AppDef Template](#jupyter-notebook-appdef-template)
+* [GUI application AppDef Template](#gui-application-appdef-template)
+* [Additional Resources](#additional-resources)
 
 
 ## Using AppDef to Customize Applications in JARVICE
 
 All applications in JARVICE are created with the PushToCompute flow. PushToCompute is a full continuous integration/continuous deployment (CI/CD) pipeline for applications on the JARVICE platform. See [here](https://jarvice.readthedocs.io/en/latest/cicd/) for a complete overview.
+Also refer to [JARVICE platform documentation](https://github.com/nimbix/jarvice-helm/blob/master/Configuration.md#running-custom-applications) when writing custom applications.
 
-Adding an AppDef to an applications enables the owner to customize a variety of components including: the application card, available workflows, workflow arguments, and connection options.
+Adding an AppDef to an application enables the owner to customize a variety of components including: the application card, available workflows, workflow arguments, and connection options.
 
 All new JARVICE applications will use the default AppDef template until it is replaced by the application owner. There are two options available to update an AppDef:
 
@@ -76,9 +79,11 @@ E.g. Software Development, Artificial Intelligence, Machine Learning, etc
 
 #### machines
 
-List the eligible machines an application can use.
+List the eligible machines an application can use
 
 [Machines](https://status.jarvice.com/) available on the NIMBIX cloud
+
+[Machine documentation](https://jarvice.readthedocs.io/en/latest/machines/) for specifying machines
 
 #### vault-type
 
@@ -104,8 +109,8 @@ Create a new PushToCompute application by:
 
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
-3. Fill in `App ID` (e.g. `default`)
-4. Fill in 'Docker or Singularity Repository' with `nimbix/ubuntu-desktop:xenial`
+3. Fill in `App ID` (e.g. `myapp`)
+4. Fill in 'Docker Repository' with `nimbix/ubuntu-desktop:xenial`
 5. Click the `OK` button in the lower right corner
 6. Click on the application menu and select Pull
 
@@ -166,7 +171,7 @@ Create a JARVICE application using the official CentOS image from DockerHub:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `shell`)
-4. Fill in 'Docker or Singularity Repository' with `centos:7`
+4. Fill in 'Docker Repository' with `centos:7`
 
     ![Centos](screenshots/centosExample.png)
 
@@ -200,38 +205,40 @@ Note:
 The `batch.json` AppDef creates a non-interactive job by setting `interactive` to `false`. Users will be unable to connect to the running job. The job will exit when the `path` command exits.
 
 ```json
-        "Batch": {
-            "path": "/bin/bash",
-            "interactive": false,
-            "name": "Batch",
-            "description": "Hello World",
-            "parameters": {
-                "-l": {
-                    "name": "-l",
-                    "description": "-l",
-                    "type": "CONST",
-                    "value": "-l",
-                    "positional": true,
-                    "required": true
-                },
-                "-c": {
-                    "name": "-c",
-                    "description": "-c",
-                    "type": "CONST",
-                    "value": "-c",
-                    "positional": true,
-                    "required": true
-                },
-                "command": {
-                    "name": "Command",
-                    "description": "Command to run",
-                    "type": "STR",
-                    "value": "echo Hello World",
-                    "positional": true,
-                    "required": true
-                }
+{
+    "Batch": {
+        "path": "/bin/bash",
+        "interactive": false,
+        "name": "Batch",
+        "description": "Hello World",
+        "parameters": {
+            "-l": {
+                "name": "-l",
+                "description": "-l",
+                "type": "CONST",
+                "value": "-l",
+                "positional": true,
+                "required": true
+            },
+            "-c": {
+                "name": "-c",
+                "description": "-c",
+                "type": "CONST",
+                "value": "-c",
+                "positional": true,
+                "required": true
+            },
+            "command": {
+                "name": "Command",
+                "description": "Command to run",
+                "type": "STR",
+                "value": "echo Hello World",
+                "positional": true,
+                "required": true
             }
         }
+    }
+}
 ```
 
 The above example uses `parameters` to pass additional arguments to the `path` command. This example will run the `command` given by the user in a bash login shell. The default command passed to the server will be `/bin/bash -l -c echo Hello World`.
@@ -245,7 +252,7 @@ Create a JARVICE application using the official Ubuntu image from DockerHub:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `batch`)
-4. Fill in 'Docker or Singularity Repository' with `ubuntu:xenial`
+4. Fill in 'Docker Repository' with `ubuntu:xenial`
 
     ![Ubuntu](screenshots/ubuntuExample.png)
 
@@ -275,31 +282,33 @@ Note:
 The `web.json` AppDef creates an interactive job that serves a web service. This examples utilizes the `url` key to set the URL provided to a user that clicks on a running application.
 
 ```json
-        "Server": {
-            "path": "/usr/sbin/nginx",
-            "interactive": true,
-            "name": "Server",
-            "description": "Start nginx web service",
-            "url": "http://%PUBLICADDR%:8080/",
-            "parameters": {
-                "-g": {
-                    "name": "-g",
-                    "description": "-g",
-                    "type": "CONST",
-                    "value": "-g",
-                    "positional": true,
-                    "required": true
-                },
-                "daemon": {
-                    "name": "daemon",
-                    "description": "daemon",
-                    "type": "CONST",
-                    "value": "daemon off;",
-                    "positional": true,
-                    "required": true
-                }
-            }
-        }
+{
+  "Server": {
+    "path": "/usr/sbin/nginx",
+    "interactive": true,
+    "name": "Server",
+    "description": "Start nginx web service",
+    "url": "http://%PUBLICADDR%:8080/",
+    "parameters": {
+      "-g": {
+        "name": "-g",
+        "description": "-g",
+        "type": "CONST",
+        "value": "-g",
+        "positional": true,
+        "required": true
+      },
+      "daemon": {
+        "name": "daemon",
+        "description": "daemon",
+        "type": "CONST",
+        "value": "daemon off;",
+        "positional": true,
+        "required": true
+      }
+    }
+  }
+}
 ```
 
 The `Server` endpoint will redirect users to port 8080 of a running job from the JARVICE portal. This snippet will start `nginx` in the foreground. The resulting job will execute ```/usr/bin/nginx -g 'daemon off;'```
@@ -351,7 +360,7 @@ Create a JARVICE application with nginx:
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `web`)
-4. Fill in 'Docker or Singularity Repository' with `nimbix/nginx:tutorial`
+4. Fill in 'Docker Repository' with `nimbix/nginx:tutorial`
 
     ![nginx](screenshots/nginxExample.png)
 
@@ -376,64 +385,66 @@ This will open `Hello World` webpage being served by nginx on JARVICE.
 
 The `jupyter.json` AppDef creates an interactive Jupyter Notebook. The `Notebook` command uses the `%RANDOM64%` substitution to start a Jupyter Notebook with a random access token.
 
-```bash
-        "Notebook": {
-            "path": "/opt/conda/bin/jupyter",
-            "interactive": true,
-            "name": "Launch notebook",
-            "description": "Start Jupyter notebook",
-            "url": "http://%PUBLICADDR%:8888/?token=%RANDOM64%",
-            "parameters": {
-                "notebook": {
-                    "name": "notebook",
-                    "description": "notebook",
-                    "type": "CONST",
-                    "value": "notebook",
-                    "positional": true,
-                    "required": true
-                },
-                "port": {
-                    "name": "port",
-                    "description": "port",
-                    "type": "CONST",
-                    "value": "--port=8888",
-                    "positional": true,
-                    "required": true
-                },
-                "ip": {
-                    "name": "ip",
-                    "description": "ip",
-                    "type": "CONST",
-                    "value": "--ip=0.0.0.0",
-                    "positional": true,
-                    "required": true
-                },
-                "browser": {
-                    "name": "browser",
-                    "description": "browser",
-                    "type": "CONST",
-                    "value": "--no-browser",
-                    "positional": true,
-                    "required": true
-                },
-                "token": {
-                    "name": "token",
-                    "description": "token",
-                    "type": "CONST",
-                    "value": "--NotebookApp.token=%RANDOM64%",
-                    "positional": true,
-                    "required": true
-                },
-                "base": {
-                    "name": "base_url",
-                    "description": "base url for notebook",
-                    "type": "CONST",
-                    "value": "--NotebookApp.base_url=%BASEURL%",
-                    "positional": true,
-                    "required": true
-                }
-            }
-        }
+```json
+{
+  "Notebook": {
+    "path": "/opt/conda/bin/jupyter",
+    "interactive": true,
+    "name": "Launch notebook",
+    "description": "Start Jupyter notebook",
+    "url": "http://%PUBLICADDR%:8888/?token=%RANDOM64%",
+    "parameters": {
+      "notebook": {
+        "name": "notebook",
+        "description": "notebook",
+        "type": "CONST",
+        "value": "notebook",
+        "positional": true,
+        "required": true
+      },
+      "port": {
+        "name": "port",
+        "description": "port",
+        "type": "CONST",
+        "value": "--port=8888",
+        "positional": true,
+        "required": true
+      },
+      "ip": {
+        "name": "ip",
+        "description": "ip",
+        "type": "CONST",
+        "value": "--ip=0.0.0.0",
+        "positional": true,
+        "required": true
+      },
+      "browser": {
+        "name": "browser",
+        "description": "browser",
+        "type": "CONST",
+        "value": "--no-browser",
+        "positional": true,
+        "required": true
+      },
+      "token": {
+        "name": "token",
+        "description": "token",
+        "type": "CONST",
+        "value": "--NotebookApp.token=%RANDOM64%",
+        "positional": true,
+        "required": true
+      },
+      "base": {
+        "name": "base_url",
+        "description": "base url for notebook",
+        "type": "CONST",
+        "value": "--NotebookApp.base_url=%BASEURL%",
+        "positional": true,
+        "required": true
+      }
+    }
+  }
+}
 ```
 
 Notice `%RANDOM64%` is used in the `parameter` and `url` key. This substitution will provide the same random generated token to the connection URL and the command used to start Jupyter Notebook.
@@ -447,7 +458,7 @@ Create a JARVICE application using the official Jupyter Notebook image from Dock
 1. Select PushToCompute tab on the menu on the right
 2. Click the `New` icon in the middle of the page
 3. Fill in `App ID` (e.g. `jupyter`)
-4. Fill in 'Docker or Singularity Repository' with `jupyter/tensorflow-notebook:latest``
+4. Fill in 'Docker Repository' with `jupyter/tensorflow-notebook:latest``
 
     ![Jupyter](screenshots/jupyter.png)
 
@@ -470,3 +481,94 @@ Submit a new job after the Pull completes:
 Example Jupyter session:
 
 ![Jupyter Session](screenshots/jupyterRun.png)
+
+## GUI application AppDef Template
+
+The `gui.json` AppDef creates an interactive job that runs an X Windows application, [Gimp](https://www.gimp.org/), in a desktop based on the [default AppDef](#Default-AppDef-Template) GUI endpoint. 
+This example requires the Nimbix Desktop, provided by adding [image-common](https://github.com/nimbix/image-common#centos-with-nimbix-desktop) to an application's Dockerfile. 
+The Nimbix desktop is launched with the Gimp binary path as a positional argument. Closing the Gimp application will shutdown the JARVICE job.
+
+```json
+{
+  "name": "Gimp",
+  "description": "Gimp application on JARVICE",
+  "author": "Nimbix, Inc.",
+  "licensed": true,
+  "classifications": [
+    "Image Editing"
+  ],
+  "machines": [
+    "n[2-9]*",
+    "n[1-9][0-9]*"
+  ],
+  "vault-types": [
+    "FILE",
+    "BLOCK",
+    "BLOCK_ARRAY",
+    "OBJECT"
+  ],
+  "commands": {
+    "Gimp": {
+      "path": "/usr/local/bin/nimbix_desktop",
+      "interactive": true,
+      "publicip": true,
+      "name": "Gimp GUI",
+      "description": "Start an interactive desktop session with Gimp multi-window mode",
+      "parameters": {
+        "toolbox": {
+          "name": "toolbox",
+          "description": "path to Gimp Toolbox binary",
+          "value": "/usr/bin/gimp",
+          "type": "CONST",
+          "positional": true,
+          "required": true
+        }
+      }
+    }
+  },
+  "image": {
+    "type": "image/png",
+    "data": ""
+  }
+}
+```
+
+### Sample Application
+
+Create a JARVICE application using the official Jupyter Notebook image from gcr.io:
+
+1. Select PushToCompute tab on the menu on the right
+2. Click the `New` icon in the middle of the page
+3. Fill in `App ID` (e.g. `gimp`)
+4. Fill in 'Docker Repository' with `gcr.io/jarvice/app-gimp:2.8`
+
+    ![Gimp](screenshots/gimp.png)
+
+5. Upload `gui.json` using the `APPDEF` tab
+6. Click the `OK` button in the lower right corner
+7. Click on the application menu and select Pull
+
+![Gimp Application Card](screenshots/gimpappCard.png)
+![Pull](screenshots/pull.png)
+
+Submit a new job after the Pull completes:
+
+1. Click on the application icon
+2. Click the `Gimp GUI` button
+3. Click the `SUBMIT` button
+    ![Gimp Submit](screenshots/gimpSubmit.png)
+4. Click the screenshot below Password to connect to the desktop session in a browser
+    ![Gimp Connect](screenshots/gimpnoVNC.png)
+
+Example Gimp session:
+
+![Gimp Session](screenshots/gimpRun.png)
+
+## Additional Resources
+
+* [JARVICE developer documentation](https://jarvice.readthedocs.io/en/latest/appdef/) 
+* [JARVICE platform documentation](https://github.com/nimbix/jarvice-helm)
+* [Nimbix Support Help Center articles](https://support.nimbix.net/hc/en-us/articles/115004341026-Hello-World-Introduction-to-PushToCompute)
+* [Introduction to PushToCompute article](https://support.nimbix.net/hc/en-us/articles/115004341026-Hello-World-Introduction-to-PushToCompute)
+* [Nimbix Developer Forum on Google Groups](https://groups.google.com/g/nimbix-developer-forum)
+* [Nimbix repos on GitHub](https://github.com/nimbix)

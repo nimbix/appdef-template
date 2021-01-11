@@ -1,0 +1,42 @@
+{
+  "name": "Gimp",
+  "description": "Gimp application on JARVICE",
+  "author": "Nimbix, Inc.",
+  "licensed": true,
+  "classifications": [
+    "Image Editing"
+  ],
+  "machines": [
+    "n[2-9]*",
+    "n[1-9][0-9]*"
+  ],
+  "vault-types": [
+    "FILE",
+    "BLOCK",
+    "BLOCK_ARRAY",
+    "OBJECT"
+  ],
+  "commands": {
+    "Gimp": {
+      "path": "/usr/local/bin/nimbix_desktop",
+      "interactive": true,
+      "publicip": true,
+      "name": "Gimp GUI",
+      "description": "Start an interactive desktop session with Gimp multi-window mode",
+      "parameters": {
+        "toolbox": {
+          "name": "toolbox",
+          "description": "path to Gimp Toolbox binary",
+          "value": "/usr/bin/gimp",
+          "type": "CONST",
+          "positional": true,
+          "required": true
+        }
+      }
+    }
+  },
+  "image": {
+    "type": "image/png",
+    "data": ""
+  }
+}
