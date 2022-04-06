@@ -13,6 +13,7 @@ Refer to this [AppDef link](https://jarvice.readthedocs.io/en/latest/appdef/) fo
 * [Web service AppDef Template](#web-service-appdef-template)
 * [Jupyter Notebook AppDef Template](#jupyter-notebook-appdef-template)
 * [GUI application AppDef Template](#gui-application-appdef-template)
+* [Gotty shell AppDef Template](#gui-application-appdef-template)
 * [Additional Resources](#additional-resources)
 
 
@@ -530,6 +531,56 @@ The Nimbix desktop is launched with the Gimp binary path as a positional argumen
     "type": "image/png",
     "data": ""
   }
+}
+```
+
+## Gotty Shell AppDef Template
+
+The `gotty_shell.json` AppDef allows to run a specific command inside an image, attached to an interactive gotty shell (http/web based shell).
+There are no specific image requirement.
+
+For example, to run a python application called `calculator.py` present at `/` of image file system, adapt template to the following: 
+
+```json
+{
+    "name": "Python based calculator",
+    "description": "Run an python based calculator",
+    "author": "Me",
+    "licensed": true,
+    "classifications": [
+        "Uncategorized"
+    ],
+    "machines": [
+        "*"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Gotty": {
+            "path": "/bin/gotty",
+            "interactive": true,
+            "name": "Gotty shell",
+            "description": "Start a command in a gotty shell",
+            "parameters": {
+                "command": {
+                    "name": "Command",
+                    "description": "Command to run inside image.",
+                    "type": "STR",
+                    "value": "/calculator.py",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        }
+    },
+    "image": {
+        "type": "image/png",
+        "data": ""
+    }
 }
 ```
 
