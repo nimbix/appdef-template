@@ -13,7 +13,7 @@ Refer to this [AppDef link](https://jarvice.readthedocs.io/en/latest/appdef/) fo
 * [Web service AppDef Template](#web-service-appdef-template)
 * [Jupyter Notebook AppDef Template](#jupyter-notebook-appdef-template)
 * [GUI application AppDef Template](#gui-application-appdef-template)
-* [Gotty shell AppDef Template](#gui-application-appdef-template)
+* [Gotty shell AppDef Template](#gotty-shell-appdef-template)
 * [Additional Resources](#additional-resources)
 
 
