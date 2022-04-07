@@ -16,11 +16,11 @@
         "OBJECT"
     ],
     "commands": {
-        "Command": {
+        "Batch": {
             "path": "/bin/bash",
             "interactive": false,
-            "name": "Command",
-            "description": "Run a batch command or an uploaded script using /bin/bash. The output may be monitored directly in your web browser.",
+            "name": "Batch",
+            "description": "Run a batch command using /bin/bash. The output may be monitored directly in your web browser.",
             "parameters": {
                 "-l": {
                     "name": "-l",
