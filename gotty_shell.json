@@ -1,0 +1,40 @@
+{
+    "name": "Gotty shell command",
+    "description": "Run a command in a gotty shell on image",
+    "author": "Nimbix, Inc.",
+    "licensed": true,
+    "classifications": [
+        "Uncategorized"
+    ],
+    "machines": [
+        "*"
+    ],
+    "vault-types": [
+        "FILE",
+        "BLOCK",
+        "BLOCK_ARRAY",
+        "OBJECT"
+    ],
+    "commands": {
+        "Gotty": {
+            "path": "/bin/gotty",
+            "interactive": true,
+            "name": "Gotty shell",
+            "description": "Start a command in a gotty shell",
+            "parameters": {
+                "command": {
+                    "name": "Command",
+                    "description": "Command to run inside image.",
+                    "type": "STR",
+                    "value": "/bin/bash",
+                    "positional": true,
+                    "required": true
+                }
+            }
+        }
+    },
+    "image": {
+        "type": "image/png",
+        "data": ""
+    }
+}

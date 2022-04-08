@@ -20,7 +20,7 @@
             "path": "/bin/bash",
             "interactive": false,
             "name": "Batch",
-            "description": "Run a batch command using /bin/bash.  The output may be monitored directly in your web browser.",
+            "description": "Run a batch command using /bin/bash. The output may be monitored directly in your web browser.",
             "parameters": {
                 "-l": {
                     "name": "-l",
@@ -51,7 +51,7 @@
             "path": "/sbin/init",
             "interactive": true,
             "name": "Server",
-            "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
+            "description": "Launch a session with all boot services, including SSH (if installed). Connection address and credentials will appear in your web browser once available.",
             "parameters": {}
         },
         "GUI": {
